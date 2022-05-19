@@ -1,0 +1,44 @@
+<html>
+<head>
+    <title>Users list</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <meta http-equiv="refresh" content="5">
+</head>
+
+<body class="w3-light-grey">
+    <div class="w3-container w3-left w3-margin-bottom w3-padding">
+        <div class="w3-container w3-light-blue w3-tiny">
+            <h1 style="font-size:4vw">
+                <span th:text="${#dates.format(new java.util.Date(price.getTime), 'dd.MM.yyyy - HH:mm:ss')}"></span>
+            </h1>
+        </div>
+        <div class="w3-container w3-light-blue w3-tiny">
+            <h1 style="font-size:3vw">
+                <span th:text="'price BTC: ' + ${price.getValue()} + ' USDT'"></span>
+            </h1>
+        </div>
+        <div class="w3-container w3-light-blue w3-tiny">
+            <h1 style="font-size:30px">
+                <span th:text="'balance: ' + ${market.getWalletUSDT()}"></span>
+            </h1>
+        </div>
+        <div class="w3-container w3-light-blue w3-tiny">
+            <h1 style="font-size:30px">
+                <span th:text="'position: ' + ${market.getPosition()}"></span>
+            </h1>
+        </div>
+        <div class="w3-container w3-red w3-tiny">
+            <h1 style="font-size:20px">
+                <span th:text="'order sell: ' + ${market.getLimitOrderSell()}"></span>
+            </h1>
+        </div>
+
+        <div class="w3-container w3-green w3-tiny">
+            <h1 style="font-size:20px">
+                <span th:text="'order buy: ' + ${market.getLimitOrderBuy()}"></span>
+            </h1>
+        </div>
+    </div>
+
+</body>
+</html>

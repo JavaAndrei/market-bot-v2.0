@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit user</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
+    <form method="POST" action="/auth/logout">
+        <button class="w3-btn w3-round-large">Logout</button>
+    </form>
+</div>
+<div class="w3-container w3-blue-grey w3-opacity">
+    <div class="w3-left" sec:authorize="isAuthenticated()">
+        <h1>Hello <span sec:authentication="name"></span>!</h1>
+    </div>
+    <div class="w3-right">
+        <h1>Trading bot</h1>
+    </div>
+</div>
+<div class="w3-container w3-grey w3-padding">
+    <button class="w3-btn w3-blue-grey w3-round-large w3-right" onclick="location.href='/users'">Back to users</button>
+</div>
+<div class="w3-card-4">
+    <div class="w3-container w3-center w3-blue-grey">
+        <h2>Edit user</h2>
+    </div>
+    <form th:method="PATCH" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}" class="w3-selection w3-light-grey w3-padding">
+        <label for="name">User:
+            <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div>
+            <input type="text" th:field="*{username}" id="name" class="w3-input w3-animate-input w3-border w3-round-large" readonly><br/>
+        </label>
+        <label for="password">Password:
+            <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</div>
+            <input type="text" th:field="*{password}" id="password" class="w3-input w3-animate-input w3-border w3-round-large" readonly><br/>
+        </label>
+        <label for="role">Role:
+            <div style="color:red" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role error</div>
+            <select type="text" th:field="*{role}" id="role" class="w3-input w3-animate-input w3-border w3-round-large">
+                <option th:each="rol : ${roles}"
+                        th:value="${rol.getId()}"
+                        th:utext="${rol.getName()}"
+                        th:selected="${user.getRole().getId() == rol.getId()}"
+                ></option>
+            </select><br/>
+        </label>
+        <button type="submit" class="w3-btn w3-blue-grey w3-round-large w3-margin-bottom">Update</button>
+    </form>
+</div>
+</body>
+</html>

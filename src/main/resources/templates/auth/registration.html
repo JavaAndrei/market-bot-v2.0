@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Trading bot</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+
+<body class="w3-light-grey">
+<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
+    <button class="w3-btn w3-round-large" onclick="location.href='/auth/login'">Login</button>
+</div>
+<div class="w3-container w3-blue-grey w3-opacity w3-right-align">
+    <div class="w3-left">
+        <h1>Register or Login to start</h1>
+    </div>
+    <div class="w3-right">
+        <h1>Trading bot</h1>
+    </div>
+</div>
+
+<div class="w3-card-4">
+    <div class="w3-container w3-center w3-green">
+        <h2>Registration</h2>
+    </div>
+    <form th:method="POST" th:action="@{/auth/registration}" th:object="${user}" class="w3-selection w3-light-grey w3-padding">
+        <label for="name">Login:
+            <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name Error</div>
+            <input type="text" th:field="*{username}" id="name" class="w3-input w3-animate-input w3-border w3-round-large"><br />
+        </label>
+        <label for="password">Password:
+            <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Name Error</div>
+            <input type="password" th:field="*{password}" id="password" class="w3-input w3-animate-input w3-border w3-round-large"><br />
+        </label>
+        <label for="confirmPassword">Confirm Password:
+            <div style="color:red" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}">Name Error</div>
+            <input type="password" th:field="*{confirmPassword}" id="confirmPassword" class="w3-input w3-animate-input w3-border w3-round-large"><br />
+        </label>
+        <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Register</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Show</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
+    <form method="POST" action="/auth/logout">
+        <button class="w3-btn w3-round-large">Logout</button>
+    </form>
+</div>
+<div class="w3-container w3-blue-grey w3-opacity">
+    <div class="w3-left" sec:authorize="isAuthenticated()">
+        <h1>Hello <span sec:authentication="name"></span>!</h1>
+    </div>
+    <div class="w3-right">
+        <h1>Trading bot</h1>
+    </div>
+</div>
+<div class="w3-container w3-grey w3-padding">
+    <button class="w3-btn w3-blue-grey w3-round-large w3-right" onclick="location.href='/users'">Back to users</button>
+</div>
+<div class="w3-card-4">
+    <div class="w3-container w3-center w3-blue-grey">
+        <h2>Show user</h2>
+    </div>
+    <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}" th:object="${user}" class="w3-selection w3-light-grey w3-padding">
+        <label for="name">User:
+            <input type="text" th:field="*{username}" id="name" class="w3-input w3-animate-input w3-border w3-round-large" readonly><br/>
+        </label>
+        <label for="password">Password:
+            <input type="text" th:field="*{password}" id="password" class="w3-input w3-animate-input w3-border w3-round-large" readonly><br/>
+        </label>
+        <label for="role">Role:
+            <input type="text"
+                   th:each="role : ${roles}"
+                   th:if="${user.getRole().getId() == role.getId()}"
+                   th:value="${role.getName()}"
+                   id="role" class="w3-input w3-animate-input w3-border w3-round-large" readonly><br/>
+        </label>
+        <button type="submit" class="w3-btn w3-blue-grey w3-round-large">Delete user</button>
+    </form>
+    <form th:method="GET" th:action="@{/users/{id}/edit(id=${user.getId()})}" class="w3-selection w3-light-grey w3-padding">
+        <button type="submit" class="w3-btn w3-blue-grey w3-round-large w3-margin-bottom">Edit user</button>
+    </form>
+</div>
+</body>
+</html>
