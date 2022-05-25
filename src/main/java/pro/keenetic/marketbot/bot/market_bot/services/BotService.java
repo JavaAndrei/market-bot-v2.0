@@ -1,23 +1,31 @@
 package pro.keenetic.marketbot.bot.market_bot.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pro.keenetic.marketbot.bot.market_bot.ApplicationContextHolder;
+import pro.keenetic.marketbot.bot.market_bot.exceptions.DefaultUncaughtExceptionHandler;
 import pro.keenetic.marketbot.bot.market_bot.markets.ConnectionPool;
+import pro.keenetic.marketbot.bot.market_bot.models.Actions;
 import pro.keenetic.marketbot.bot.market_bot.models.Market;
 import pro.keenetic.marketbot.bot.market_bot.markets.exmo.ExmoSecurity;
 
 @Service
 public class BotService {
 
-    public void startBot(String publicKey, String secretKey) {
+    @Autowired
+    private UserActionService userActionService;
 
+    public void startBot(String publicKey, String secretKey) {
         Market market = ApplicationContextHolder.getBean("market");
         market.getMarketRestService().initSecurity(new ExmoSecurity(publicKey, secretKey));
+        market.setUncaughtExceptionHandler(new DefaultUncaughtExceptionHandler());
 
         ConnectionPool.addMarket(market.getLogin(), market);
 
         market.start();
+
+        userActionService.save(market.getLogin(), Actions.START);
     }
 
     public void stopBot() {
@@ -34,6 +42,7 @@ public class BotService {
                 }
             }
             ConnectionPool.removeMarket(login);
+            userActionService.save(market.getLogin(), Actions.STOP);
         }
     }
 }

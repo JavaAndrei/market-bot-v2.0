@@ -96,6 +96,9 @@ public class ExmoMarginAuthWebsocket {
 
     public void parseMessage(String message) {
         //System.out.println(message);
+//        if (message.contains("error")) {
+//            throw new RuntimeException("******************************************************************************************");
+//        }
         try {
             if (message.contains("margin/wallets")) {
                 if (message.contains("snapshot") | message.contains("\"event\":\"update\"")) {

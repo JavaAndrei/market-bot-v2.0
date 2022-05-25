@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Users list</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
+    <div style="float: right;">
+        <form th:method="POST" th:action="@{/auth/logout}">
+            <button class="w3-btn w3-round-large">Logout</button>
+        </form>
+    </div>
+    <div sec:authorize="hasAnyAuthority('permissions:admin', 'permissions:observer')" style="float: right;">
+        <form th:method="GET" th:action="@{/admin}">
+            <button class="w3-btn w3-round-large">Admin</button>
+        </form>
+    </div>
+</div>
+<div class="w3-container w3-blue-grey w3-opacity">
+    <div class="w3-left" sec:authorize="isAuthenticated()">
+        <h1>Hello <span sec:authentication="name"></span>!</h1>
+    </div>
+    <div class="w3-right">
+        <h1>Trading bot</h1>
+    </div>
+</div>
+<div class="w3-container w3-grey w3-padding">
+    <div class="w3-left">
+        <form th:method="GET" th:action="@{/users/new}">
+            <button class="w3-btn w3-blue-grey w3-round-large w3-right">Create new user</button>
+        </form>
+    </div>
+    <div class="w3-right">
+        <form th:method="GET" th:action="@{/trader}">
+            <button class="w3-btn w3-blue-grey w3-round-large">Back to main</button>
+        </form>
+    </div>
+</div>
+<div class="w3-container w3-center w3-margin-bottom w3-padding">
+    <div class="w3-card-4">
+        <div class="w3-container w3-blue-grey">
+            <h2>Users</h2>
+        </div>
+        <table style="width:100%">
+            <colgroup>
+                <col style="background-color:#C3C3C3">
+                <col style="background-color:#D3D3D3">
+                <col style="background-color:#C3C3C3">
+                <col style="background-color:#D3D3D3">
+                <col style="background-color:#C3C3C3">
+            </colgroup>
+            <tr>
+                <th>id</th>
+                <th>user</th>
+                <th>password</th>
+                <th>role</th>
+                <th>deleted</th>
+            </tr>
+            <tr th:each="user : ${users}" class=\"w3-hover-sand\">
+                <td><a th:href="@{/users/{id}(id=${user.getId()})}"
+                       th:text="${user.getId()}">user</a>
+                </td>
+                <td><a th:href="@{/users/{id}(id=${user.getId()})}"
+                       th:text="${user.getUsername()}">user</a>
+                </td>
+                <td><a th:href="@{/users/{id}(id=${user.getId()})}"
+                       th:text="${user.getPassword()}">user</a>
+                </td>
+                <td><a th:href="@{/users/{id}(id=${user.getId()})}"
+                       th:text="${user.getRole().getName()}">user</a>
+                </td>
+                <td><a th:href="@{/users/{id}(id=${user.getId()})}"
+                       th:text="${user.getDeleted()}">user</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</body>
+</html>

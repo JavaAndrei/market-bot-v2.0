@@ -31,6 +31,9 @@ public class Market extends Thread {
     @Override
     public void run() {
         isActive = true;
+        //if (true)
+            //throw new RuntimeException("******************************************************************************************");
+
         try {
             executeStrategies();
             interruptStrategies();

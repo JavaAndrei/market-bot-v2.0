@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5 ">
 <head>
     <meta charset="UTF-8">
     <title>Users list</title>
@@ -9,9 +9,11 @@
 </head>
 <body>
 <div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
-    <form method="POST" action="/auth/logout">
-        <button class="w3-btn w3-round-large">Logout</button>
-    </form>
+    <div style="float: right;">
+        <form th:method="POST" th:action="@{/auth/logout}">
+            <button class="w3-btn w3-round-large">Logout</button>
+        </form>
+    </div>
 </div>
 <div class="w3-container w3-blue-grey w3-opacity">
     <div class="w3-left" sec:authorize="isAuthenticated()">
@@ -22,17 +24,17 @@
     </div>
 </div>
 <div class="w3-container w3-grey w3-padding">
-    <div class="w3-left">
-        <button class="w3-btn w3-blue-grey w3-round-large" onclick="location.href='/users/new'">Create new user</button>
-    </div>
-    <div class="w3-right">
-        <button class="w3-btn w3-blue-grey w3-round-large" onclick="location.href='/trader'">Back to main</button>
-    </div>
+    <form th:method="GET" th:action="@{/users}" class="w3-left">
+        <button class="w3-btn w3-blue-grey w3-round-large">All users</button>
+    </form>
+    <form th:method="GET" th:action="@{/trader}" class="w3-right">
+        <button class="w3-btn w3-blue-grey w3-round-large">Back to main</button>
+    </form>
 </div>
 <div class="w3-container w3-center w3-margin-bottom w3-padding">
     <div class="w3-card-4">
         <div class="w3-container w3-blue-grey">
-            <h2>Users</h2>
+            <h2>Admin panel</h2>
         </div>
         <table style="width:100%">
             <colgroup>
@@ -44,21 +46,21 @@
             <tr>
                 <th>id</th>
                 <th>user</th>
-                <th>password</th>
-                <th>role</th>
+                <th>action</th>
+                <th>time</th>
             </tr>
             <tr th:each="user : ${users}" class=\"w3-hover-sand\">
-                <td><a th:href="@{/users/{id}(id=${user.getId()})}"
-                       th:text="${user.getId()}">user</a>
+                <td>
+                    <span th:text="${user.getId()}">user</span>
                 </td>
-                <td><a th:href="@{/users/{id}(id=${user.getId()})}"
-                       th:text="${user.getUsername()}">user</a>
+                <td>
+                    <span th:text="${user.getUser().getUsername()}">user</span>
                 </td>
-                <td><a th:href="@{/users/{id}(id=${user.getId()})}"
-                       th:text="${user.getPassword()}">user</a>
+                <td>
+                    <span th:text="${user.getAction().getName()}">user</span>
                 </td>
-                <td><a th:href="@{/users/{id}(id=${user.getId()})}"
-                       th:text="${user.getRole().getName()}">user</a>
+                <td>
+                    <span th:text="${user.getDate()}">user</span>
                 </td>
             </tr>
         </table>

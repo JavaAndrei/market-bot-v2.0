@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Trading bot</title>
@@ -8,7 +9,9 @@
 
 <body class="w3-light-grey">
 <div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
-    <button class="w3-btn w3-round-large" onclick="location.href='/auth/registration'">Registration</button>
+    <form th:method="GET" th:action="@{/auth/registration}">
+        <button class="w3-btn w3-round-large">Registration</button>
+    </form>
 </div>
 <div class="w3-container w3-blue-grey w3-opacity w3-right-align">
     <div class="w3-left">
@@ -25,11 +28,12 @@
     </div>
     <form th:method="POST" class="w3-selection w3-light-grey w3-padding">
         <label>Login:
-<!--            <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Name error</div>-->
-            <input type="text" name="username" class="w3-input w3-animate-input w3-border w3-round-large"><br />
+            <div style="color:red" th:if="${username_error!=null}" th:text="*{username_error}">Name error</div>
+            <input type="text" name="username" th:value="${username}" class="w3-input w3-animate-input w3-border w3-round-large"><br />
         </label>
         <label>Password:
-            <input type="text" name="password" class="w3-input w3-animate-input w3-border w3-round-large"><br />
+            <div style="color:red" th:if="${password_error!=null}" th:text="*{password_error}">Name error</div>
+            <input type="password" name="password" class="w3-input w3-animate-input w3-border w3-round-large"><br />
         </label>
         <button type="submit" class="w3-btn w3-green w3-round-large w3-margin-bottom">Login</button>
     </form>

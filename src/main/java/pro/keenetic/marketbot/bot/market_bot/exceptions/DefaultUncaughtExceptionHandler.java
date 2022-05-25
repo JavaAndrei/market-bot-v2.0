@@ -4,6 +4,8 @@ public class DefaultUncaughtExceptionHandler implements Thread.UncaughtException
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        System.out.println("DefaultUncaughtException: " + t.getName() + ", " + e.getMessage());
+        System.out.println("******************************************************************************************");
+        System.out.println("* DefaultUncaughtException: " + t.getName() + ", " + e.getMessage());
+        System.out.println("******************************************************************************************");
     }
 }

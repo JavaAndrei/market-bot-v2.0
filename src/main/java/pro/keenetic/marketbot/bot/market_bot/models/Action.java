@@ -5,13 +5,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Set;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "actions")
+public class Action {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY)
@@ -21,6 +20,6 @@ public class Role {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany (mappedBy="role", cascade=CascadeType.ALL)
-    private Collection<User> users;
+    @OneToMany(mappedBy="action", cascade = CascadeType.ALL)
+    private Collection<UserAction> userActions;
 }

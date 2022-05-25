@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:th="http://www.thymeleaf.org"
+
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"><!--      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"-->
 <head>
     <meta charset="UTF-8">
     <title>Trading bot</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
-
 <body class="w3-light-grey">
     <div class="w3-container w3-grey w3-opacity w3-right-align w3-padding\">
         <div style="float: right;">
-            <form method="POST" action="/auth/logout">
+            <form th:method="POST" th:action="@{/auth/logout}">
                 <button class="w3-btn w3-round-large">Logout</button>
             </form>
         </div>
         <div style="float: right;">
-            <form method="GET" action="/bots/bot">
+            <form th:method="GET" th:action="@{/bots/bot}">
                 <button class="w3-btn w3-round-large">Bot</button>
+            </form>
+        </div>
+        <div sec:authorize="hasAnyAuthority('permissions:admin', 'permissions:observer')" style="float: right;">
+            <form th:method="GET" th:action="@{/admin}">
+                <button class="w3-btn w3-round-large">Admin</button>
             </form>
         </div>
     </div>
@@ -30,7 +36,7 @@
     </div>
 
 <div class="w3-container">
-    <iframe src="/bots/service"></iframe>
+    <iframe th:src="@{/bots/service}"></iframe>
     <style>
         iframe {
             position: absolute;

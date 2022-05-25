@@ -11,6 +11,7 @@ import pro.keenetic.marketbot.bot.market_bot.json.ExmoOrderBook;
 import pro.keenetic.marketbot.bot.market_bot.markets.ConnectionPool;
 import pro.keenetic.marketbot.bot.market_bot.services.BotService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 @Controller
@@ -28,41 +29,41 @@ public class BotController {
 
     @GetMapping("/connection")
     public String getMarketKeysPage() {
-        return "bots/connection";
+        return "views/bots/connection";
     }
 
     @PostMapping("/connection")
-    public String getBotPage() {
-        botService.startBot("K-d291d4422e26a5cb7deaad0707d9b6c47b24d188", "S-889ae2f86012ca474b563a1414f66b6e832430f8");
-        return "bots/bot";
+    public String getBotPage(HttpServletRequest request) {
+        botService.startBot(request.getParameter("public_key"), request.getParameter("secret_key"));
+        return "views/bots/bot";
     }
 
     @GetMapping("/bot")
     public String selectBotPage(Principal principal) {
         if (ConnectionPool.isMarketRunning(principal.getName())) {
-            return "bots/bot";
+            return "views/bots/bot";
         } else {
-            return "bots/connection";
+            return "views/bots/connection";
         }
     }
 
     @PostMapping("/bot")
     public String getConnectionPage() {
         botService.stopBot();
-        return "bots/connection";
+        return "views/bots/connection";
     }
 
     @GetMapping("/service")
     public String service(Model model) {
         model.addAttribute("price", binancePrice);
         model.addAttribute("orderBook", exmoOrderBook);
-        return "bots/service";
+        return "views/bots/service";
     }
 
     @GetMapping("/trading")
     public String getTrading(Model model, Principal principal) {
         model.addAttribute("price", binancePrice);
         model.addAttribute("market", ConnectionPool.getMarket(principal.getName()).getMarketRestService());
-        return "bots/trading";
+        return "views/bots/trading";
     }
 }

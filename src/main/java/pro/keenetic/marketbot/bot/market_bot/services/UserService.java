@@ -21,6 +21,9 @@ public class UserService {
     private RoleDAO roleDAO;
 
     @Autowired
+    private UserActionService userActionService;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public void save(User user) {
@@ -31,9 +34,6 @@ public class UserService {
 
     public void update(User user) {
         user.setUsername(user.getUsername());
-        if (!user.getPassword().equals("")) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
         userDAO.save(user);
     }
 
@@ -52,7 +52,8 @@ public class UserService {
     }
 
     public void deleteById(long id) {
-
+        //User user = getById(id);
+        //userActionService.deleteAllByUser(user);
         userDAO.deleteById(id);
     }
 

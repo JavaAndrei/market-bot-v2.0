@@ -1,10 +1,11 @@
-<html>
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Users list</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <meta http-equiv="refresh" content="5">
 </head>
-
 <body class="w3-light-grey">
 <div class="w3-container w3-left w3-margin-bottom w3-padding" style="font-size:8vw">
     <div class="w3-container w3-red w3-tiny" th:each="ask : ${orderBook.getAsk()}">
@@ -14,6 +15,7 @@
     </div>
     <div class="w3-container w3-light-blue w3-tiny">
         <span th:text="${price.getValue()} + 'USDT; time: ' + ${#dates.format(new java.util.Date(price.getTime), 'dd.MM.yyyy - HH:mm:ss')}"></span>
+<!--        <span th:text="${price.getValue()} + 'USDT; time: ' + ${#dates.format(new java.util.Date(price.getTime), 'dd.MM.yyyy - HH:mm:ss')}"></span>-->
     </div>
     <div class="w3-container w3-green w3-tiny" th:each="bid : ${orderBook.getBid()}">
         <div style="line-height: 1.2; float: left; width: 33%;" th:inline="text">[[${#numbers.formatDecimal(bid.get(0), 1, 'COMMA', 2, 'POINT')}]]</div>

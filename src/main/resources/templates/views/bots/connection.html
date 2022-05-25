@@ -7,10 +7,17 @@
 </head>
 
 <body class="w3-light-grey">
-<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
-    <form method="POST" action="/auth/logout">
-        <button class="w3-btn w3-round-large">Logout</button>
-    </form>
+<div class="w3-container w3-grey w3-opacity w3-right-align w3-padding" >
+    <div style="float: right;">
+        <form th:method="POST" th:action="@{/auth/logout}">
+            <button class="w3-btn w3-round-large">Logout</button>
+        </form>
+    </div>
+    <div sec:authorize="hasAnyAuthority('permissions:admin', 'permissions:observer')" style="float: right;">
+        <form th:method="GET" th:action="@{/admin}">
+            <button class="w3-btn w3-round-large">Admin</button>
+        </form>
+    </div>
 </div>
 <div class="w3-container w3-blue-grey w3-opacity w3-right-align">
     <div class="w3-left" sec:authorize="isAuthenticated()">
@@ -26,12 +33,12 @@
         <div class="w3-container w3-center w3-green">
             <h2>Enter PUBLIC_KEY and SECRET_KEY to start trading</h2>
         </div>
-        <form method="post" action="/bots/connection" class="w3-selection w3-light-grey w3-padding" >
+        <form th:method="POST" th:action="@{/bots/connection}" class="w3-selection w3-light-grey w3-padding">
             <label>PUBLIC_KEY:
                 <input type="text" name="public_key" class="w3-input w3-animate-input w3-border w3-round-large"><br/>
             </label>
             <label>SECRET_KEY:
-                <input type="text" name="secret_key" class="w3-input w3-animate-input w3-border w3-round-large"><br/>
+                <input type="password" name="secret_key" class="w3-input w3-animate-input w3-border w3-round-large"><br/>
             </label>
             <button type="submit" name="action" value="start" class="w3-btn w3-green w3-round-large w3-margin-bottom">Start trading</button>
         </form>
@@ -39,7 +46,9 @@
 </div>
 
 <div class="w3-container w3-grey w3-opacity w3-right-align w3-padding">
-    <button class="w3-btn w3-round-large" onclick="location.href='/trader'">Back to main</button>
+    <form th:method="GET" th:action="@{/trader}">
+        <button class="w3-btn w3-round-large">Back to main</button>
+    </form>
 </div>
 </body>
 </html>
